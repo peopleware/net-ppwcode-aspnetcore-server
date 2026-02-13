@@ -8,4 +8,7 @@
     </PropertyGroup>
 
     <!-- common dependencies included using GlobalPackageReference -->
+    <ItemGroup>
+        <PackageReference Include="PPWCode.Vernacular.Contracts.I" />
+    </ItemGroup>
 </Project>
