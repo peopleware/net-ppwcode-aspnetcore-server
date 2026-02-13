@@ -26,7 +26,7 @@ public class LinksManager : ILinksManager
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    private readonly object _locker = new ();
+    private readonly object _locker = new();
     private IUrlHelper? _urlHelper;
 
     public LinksManager(IHttpContextAccessor httpContextAccessor)
@@ -55,13 +55,13 @@ public class LinksManager : ILinksManager
                         Endpoint? endpoint = _httpContextAccessor.HttpContext.GetEndpoint();
                         if (endpoint is not null)
                         {
-                            RouteData routeData = new ();
+                            RouteData routeData = new();
                             IDataTokensMetadata? dataTokens = endpoint.Metadata.GetMetadata<IDataTokensMetadata>();
                             routeData.PushState(router: null, _httpContextAccessor.HttpContext.Request.RouteValues, new RouteValueDictionary(dataTokens?.DataTokens));
                             ActionDescriptor? action = endpoint.Metadata.GetMetadata<ActionDescriptor>();
                             if (action is not null)
                             {
-                                ActionContext actionContext = new (_httpContextAccessor.HttpContext, routeData, action);
+                                ActionContext actionContext = new(_httpContextAccessor.HttpContext, routeData, action);
                                 IServiceProvider services = _httpContextAccessor.HttpContext.RequestServices;
                                 _urlHelper =
                                     services

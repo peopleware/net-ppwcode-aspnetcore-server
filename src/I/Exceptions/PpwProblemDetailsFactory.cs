@@ -44,7 +44,7 @@ public class PpwProblemDetailsFactory : ProblemDetailsFactory
         statusCode ??= StatusCodes.Status500InternalServerError;
 
         ProblemDetails problemDetails =
-            new ()
+            new()
             {
                 Status = statusCode,
                 Title = title,
@@ -77,7 +77,7 @@ public class PpwProblemDetailsFactory : ProblemDetailsFactory
         statusCode ??= StatusCodes.Status400BadRequest;
 
         ValidationProblemDetails problemDetails =
-            new (modelStateDictionary)
+            new(modelStateDictionary)
             {
                 Status = statusCode,
                 Title = title,

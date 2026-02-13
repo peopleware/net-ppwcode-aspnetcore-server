@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <Import Project="..\common.props" />
+
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Asp.Versioning.Mvc" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="PPWCode.Vernacular.Exceptions.V" />
+        <PackageReference Include="PPWCode.Vernacular.Persistence.V" />
+    </ItemGroup>
+
+</Project>
