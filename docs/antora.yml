@@ -1,0 +1,5 @@
+name: ppwcode-aspnetcore-server-i
+version: ~
+title: PPWCode.AspNetCore.Server.I
+nav:
+  - modules/ROOT/nav.adoc
