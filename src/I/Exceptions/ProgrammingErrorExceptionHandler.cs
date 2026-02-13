@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.Hosting;
 
+using PPWCode.Vernacular.Exceptions.V;
+
 using ProgrammingError = PPWCode.Vernacular.Exceptions.V.ProgrammingError;
 
 namespace PPWCode.AspNetCore.Server.I.Exceptions;
@@ -20,7 +22,9 @@ public sealed class ProgrammingErrorExceptionHandler
 
     /// <inheritdoc />
     protected override int? GetStatusCode(ExceptionContext context, ProgrammingError? exception)
-        => StatusCodes.Status500InternalServerError;
+        => exception is ApiUsageError // ApiUsageError => programming error on the frontend
+               ? StatusCodes.Status400BadRequest
+               : StatusCodes.Status500InternalServerError;
 
     /// <inheritdoc />
     protected override bool LogException
