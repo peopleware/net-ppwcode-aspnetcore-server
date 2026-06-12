@@ -7,10 +7,10 @@ using Microsoft.Extensions.Hosting;
 namespace PPWCode.AspNetCore.Server.I.Exceptions;
 
 [ExcludeFromCodeCoverage]
-public sealed class OperationCanceledExceptionHandler
-    : BaseExceptionHandler<OperationCanceledExceptionHandler, OperationCanceledException>
+public sealed class OperationCancelledExceptionHandler
+    : BaseExceptionHandler<OperationCancelledExceptionHandler, OperationCanceledException>
 {
-    public OperationCanceledExceptionHandler(ProblemDetailsFactory problemDetailsFactory, IHostEnvironment environment)
+    public OperationCancelledExceptionHandler(ProblemDetailsFactory problemDetailsFactory, IHostEnvironment environment)
         : base(problemDetailsFactory, environment)
     {
     }
