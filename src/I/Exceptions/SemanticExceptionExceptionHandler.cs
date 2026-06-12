@@ -21,10 +21,10 @@ using PPWCode.Vernacular.Exceptions.V;
 namespace PPWCode.AspNetCore.Server.I.Exceptions;
 
 [ExcludeFromCodeCoverage]
-public sealed class SemanticExceptionHandler
-    : BaseExceptionHandler<SemanticExceptionHandler, SemanticException>
+public sealed class SemanticExceptionExceptionHandler
+    : BaseExceptionHandler<SemanticExceptionExceptionHandler, SemanticException>
 {
-    public SemanticExceptionHandler(ProblemDetailsFactory problemDetailsFactory, IHostEnvironment environment)
+    public SemanticExceptionExceptionHandler(ProblemDetailsFactory problemDetailsFactory, IHostEnvironment environment)
         : base(problemDetailsFactory, environment)
     {
     }
