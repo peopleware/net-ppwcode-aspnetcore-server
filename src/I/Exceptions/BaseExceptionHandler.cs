@@ -105,6 +105,11 @@ public abstract class BaseExceptionHandler<THandler, TException> : IExceptionHan
                         .CreateProblemDetails(
                             context.HttpContext,
                             statusCode: statusCode.Value);
+                if (IsDevelopment && contextException is not null)
+                {
+                    problemDetail.Extensions.Add("Exception", FormatException(contextException));
+                }
+
                 EnrichProblemDetails(context, contextException, problemDetail);
                 context.Result = new ObjectResult(problemDetail);
                 return true;
@@ -184,4 +189,26 @@ public abstract class BaseExceptionHandler<THandler, TException> : IExceptionHan
         ProblemDetails problemDetail)
     {
     }
+
+    /// <summary>
+    ///     Builds a structured, serialization-friendly representation of an exception (including its stack trace and
+    ///     inner exceptions), added to the <see cref="ProblemDetails" /> extensions when <see cref="IsDevelopment" />
+    ///     is <see langword="true" />.
+    /// </summary>
+    /// <param name="exception">The exception to format.</param>
+    /// <returns>An object describing the exception, including its inner exception chain.</returns>
+    protected virtual object FormatException(Exception exception)
+        => new
+           {
+               Type = exception.GetType().FullName,
+               exception.Message,
+               StackTrace =
+                   exception
+                       .StackTrace?
+                       .Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries),
+               InnerException =
+                   exception.InnerException is { } inner
+                       ? FormatException(inner)
+                       : null
+           };
 }
