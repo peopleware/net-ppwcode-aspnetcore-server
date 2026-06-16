@@ -10,6 +10,7 @@ This file is translated into markdown and used for the release notes in the GitH
 === Fixes
 * Renamed `OperationCanceledExceptionHandler` to `OperationCancelledExceptionHandler` because of typo (breaking change)
 * Renamed `SemanticExceptionHandler` to `SemanticExceptionExceptionHandler` (breaking change)
+* Improve documentation
 
 === New
 * `ApiUsageErrorExceptionHandler`: initial version of exception handler for `ApiUsageError`

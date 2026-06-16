@@ -20,10 +20,12 @@ using PPWCode.Vernacular.Contracts.I;
 
 namespace PPWCode.AspNetCore.Server.I.Exceptions;
 
+/// <inheritdoc />
 [ExcludeFromCodeCoverage]
-public class ContractViolationExceptionHandler
+public sealed class ContractViolationExceptionHandler
     : BaseExceptionHandler<ContractViolationExceptionHandler, ContractViolation>
 {
+    /// <inheritdoc />
     public ContractViolationExceptionHandler(ProblemDetailsFactory problemDetailsFactory, IHostEnvironment environment)
         : base(problemDetailsFactory, environment)
     {

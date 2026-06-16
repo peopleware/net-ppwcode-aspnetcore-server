@@ -18,8 +18,10 @@ using PPWCode.Vernacular.Exceptions.V;
 
 namespace PPWCode.AspNetCore.Server.I.Exceptions;
 
-public class ApiUsageErrorExceptionHandler : BaseExceptionHandler<ApiUsageErrorExceptionHandler, ApiUsageError>
+/// <inheritdoc />
+public sealed class ApiUsageErrorExceptionHandler : BaseExceptionHandler<ApiUsageErrorExceptionHandler, ApiUsageError>
 {
+    /// <inheritdoc />
     public ApiUsageErrorExceptionHandler(ProblemDetailsFactory problemDetailsFactory, IHostEnvironment environment)
         : base(problemDetailsFactory, environment)
     {

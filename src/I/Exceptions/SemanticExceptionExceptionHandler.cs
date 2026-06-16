@@ -20,10 +20,12 @@ using PPWCode.Vernacular.Exceptions.V;
 
 namespace PPWCode.AspNetCore.Server.I.Exceptions;
 
+/// <inheritdoc />
 [ExcludeFromCodeCoverage]
 public sealed class SemanticExceptionExceptionHandler
     : BaseExceptionHandler<SemanticExceptionExceptionHandler, SemanticException>
 {
+    /// <inheritdoc />
     public SemanticExceptionExceptionHandler(ProblemDetailsFactory problemDetailsFactory, IHostEnvironment environment)
         : base(problemDetailsFactory, environment)
     {
