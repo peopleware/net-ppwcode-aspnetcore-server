@@ -32,6 +32,10 @@ public sealed class ContractViolationExceptionHandler
     }
 
     /// <inheritdoc />
+    protected override bool LogException
+        => true;
+
+    /// <inheritdoc />
     protected override int? GetStatusCode(ExceptionContext context, ContractViolation? contextException)
         => StatusCodes.Status500InternalServerError;
 }

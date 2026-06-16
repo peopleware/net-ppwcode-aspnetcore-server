@@ -28,6 +28,10 @@ public sealed class ApiUsageErrorExceptionHandler : BaseExceptionHandler<ApiUsag
     }
 
     /// <inheritdoc />
+    protected override bool LogException
+        => true;
+
+    /// <inheritdoc />
     protected override int? GetStatusCode(ExceptionContext context, ApiUsageError? contextException)
         => StatusCodes.Status400BadRequest;
 }
