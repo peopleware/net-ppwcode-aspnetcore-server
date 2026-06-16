@@ -22,7 +22,7 @@ namespace PPWCode.AspNetCore.Server.I.Exceptions;
 
 /// <inheritdoc />
 [ExcludeFromCodeCoverage]
-public sealed class SemanticExceptionExceptionHandler
+public class SemanticExceptionExceptionHandler
     : BaseExceptionHandler<SemanticExceptionExceptionHandler, SemanticException>
 {
     /// <inheritdoc />
