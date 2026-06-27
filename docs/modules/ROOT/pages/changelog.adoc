@@ -26,3 +26,8 @@ include::partial$changelog-{release}.adoc[]
 == `{release}`
 include::partial$changelog-release-section.adoc[]
 include::partial$changelog-{release}.adoc[]
+
+:release: 2.0.0
+== `{release}`
+include::partial$changelog-release-section.adoc[]
+include::partial$changelog-{release}.adoc[]

@@ -1,4 +1,4 @@
-// Copyright 2026 by PeopleWare n.v..
+﻿// Copyright 2026 by PeopleWare n.v..
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -16,20 +16,26 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.Hosting;
 
-using PPWCode.Vernacular.Exceptions.V;
+using PPWCode.Vernacular.Contracts.I;
 
 namespace PPWCode.AspNetCore.Server.I.Exceptions;
 
+/// <inheritdoc />
 [ExcludeFromCodeCoverage]
-public sealed class SemanticExceptionHandler
-    : BaseExceptionHandler<SemanticExceptionHandler, SemanticException>
+public sealed class ContractViolationExceptionHandler
+    : BaseExceptionHandler<ContractViolationExceptionHandler, ContractViolation>
 {
-    public SemanticExceptionHandler(ProblemDetailsFactory problemDetailsFactory, IHostEnvironment environment)
+    /// <inheritdoc />
+    public ContractViolationExceptionHandler(ProblemDetailsFactory problemDetailsFactory, IHostEnvironment environment)
         : base(problemDetailsFactory, environment)
     {
     }
 
     /// <inheritdoc />
-    protected override int? GetStatusCode(ExceptionContext context, SemanticException? exception)
-        => StatusCodes.Status400BadRequest;
+    protected override bool LogException
+        => true;
+
+    /// <inheritdoc />
+    protected override int? GetStatusCode(ExceptionContext context, ContractViolation? contextException)
+        => StatusCodes.Status500InternalServerError;
 }

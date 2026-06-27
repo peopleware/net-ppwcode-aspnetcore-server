@@ -22,6 +22,13 @@ using Endpoint = Microsoft.AspNetCore.Http.Endpoint;
 
 namespace PPWCode.AspNetCore.Server.I;
 
+/// <summary>
+///     Default <see cref="ILinksManager" /> implementation that generates URLs through the current request's
+///     <see cref="IUrlHelper" />.
+/// </summary>
+/// <remarks>
+///     The URL helper is created lazily from the current <see cref="HttpContext" /> and cached for subsequent calls.
+/// </remarks>
 public class LinksManager : ILinksManager
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
@@ -29,6 +36,10 @@ public class LinksManager : ILinksManager
     private readonly object _locker = new();
     private IUrlHelper? _urlHelper;
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="LinksManager" /> class.
+    /// </summary>
+    /// <param name="httpContextAccessor">The accessor used to retrieve the current <see cref="HttpContext" />.</param>
     public LinksManager(IHttpContextAccessor httpContextAccessor)
     {
         _httpContextAccessor = httpContextAccessor;
@@ -42,6 +53,10 @@ public class LinksManager : ILinksManager
     public string? Link(string routeName, object? routeValues)
         => GetUrlHelper().Link(routeName, routeValues);
 
+    /// <summary>
+    ///     Gets the URL helper for the current request.
+    /// </summary>
+    /// <returns>The URL helper created from the current endpoint's action context.</returns>
     private IUrlHelper GetUrlHelper()
     {
         if (_urlHelper is null)

@@ -1,4 +1,4 @@
-﻿// Copyright 2026 by PeopleWare n.v..
+// Copyright 2026 by PeopleWare n.v..
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -18,28 +18,20 @@ using Microsoft.Extensions.Hosting;
 
 using PPWCode.Vernacular.Exceptions.V;
 
-using ProgrammingError = PPWCode.Vernacular.Exceptions.V.ProgrammingError;
-
 namespace PPWCode.AspNetCore.Server.I.Exceptions;
 
 /// <inheritdoc />
 [ExcludeFromCodeCoverage]
-public sealed class ProgrammingErrorExceptionHandler
-    : BaseExceptionHandler<ProgrammingErrorExceptionHandler, ProgrammingError>
+public class SemanticExceptionExceptionHandler
+    : BaseExceptionHandler<SemanticExceptionExceptionHandler, SemanticException>
 {
     /// <inheritdoc />
-    public ProgrammingErrorExceptionHandler(ProblemDetailsFactory problemDetailsFactory, IHostEnvironment environment)
+    public SemanticExceptionExceptionHandler(ProblemDetailsFactory problemDetailsFactory, IHostEnvironment environment)
         : base(problemDetailsFactory, environment)
     {
     }
 
     /// <inheritdoc />
-    protected override bool LogException
-        => true;
-
-    /// <inheritdoc />
-    protected override int? GetStatusCode(ExceptionContext context, ProgrammingError? exception)
-        => exception is ApiUsageError // ApiUsageError => programming error on the frontend
-               ? StatusCodes.Status400BadRequest
-               : StatusCodes.Status500InternalServerError;
+    protected override int? GetStatusCode(ExceptionContext context, SemanticException? exception)
+        => StatusCodes.Status400BadRequest;
 }

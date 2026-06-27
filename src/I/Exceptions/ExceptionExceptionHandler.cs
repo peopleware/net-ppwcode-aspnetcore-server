@@ -16,19 +16,21 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.Hosting;
 
-using PPWCode.Vernacular.Exceptions.V;
-
-using ProgrammingError = PPWCode.Vernacular.Exceptions.V.ProgrammingError;
-
 namespace PPWCode.AspNetCore.Server.I.Exceptions;
 
 /// <inheritdoc />
+/// <remarks>
+///     <inheritdoc cref="BaseExceptionHandler{ExceptionExceptionHandler,Exception}" path="/remarks/node()" />
+///     <para>
+///         Use this exception handler to handle all exceptions, such as unhandled exceptions. This should be registered
+///         last.
+///     </para>
+/// </remarks>
 [ExcludeFromCodeCoverage]
-public sealed class ProgrammingErrorExceptionHandler
-    : BaseExceptionHandler<ProgrammingErrorExceptionHandler, ProgrammingError>
+public sealed class ExceptionExceptionHandler : BaseExceptionHandler<ExceptionExceptionHandler, Exception>
 {
     /// <inheritdoc />
-    public ProgrammingErrorExceptionHandler(ProblemDetailsFactory problemDetailsFactory, IHostEnvironment environment)
+    public ExceptionExceptionHandler(ProblemDetailsFactory problemDetailsFactory, IHostEnvironment environment)
         : base(problemDetailsFactory, environment)
     {
     }
@@ -38,8 +40,6 @@ public sealed class ProgrammingErrorExceptionHandler
         => true;
 
     /// <inheritdoc />
-    protected override int? GetStatusCode(ExceptionContext context, ProgrammingError? exception)
-        => exception is ApiUsageError // ApiUsageError => programming error on the frontend
-               ? StatusCodes.Status400BadRequest
-               : StatusCodes.Status500InternalServerError;
+    protected override int? GetStatusCode(ExceptionContext context, Exception? contextException)
+        => StatusCodes.Status500InternalServerError;
 }

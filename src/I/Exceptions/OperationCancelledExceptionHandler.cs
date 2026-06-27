@@ -11,35 +11,24 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.Hosting;
-
-using PPWCode.Vernacular.Exceptions.V;
-
-using ProgrammingError = PPWCode.Vernacular.Exceptions.V.ProgrammingError;
 
 namespace PPWCode.AspNetCore.Server.I.Exceptions;
 
 /// <inheritdoc />
 [ExcludeFromCodeCoverage]
-public sealed class ProgrammingErrorExceptionHandler
-    : BaseExceptionHandler<ProgrammingErrorExceptionHandler, ProgrammingError>
+public sealed class OperationCancelledExceptionHandler
+    : BaseExceptionHandler<OperationCancelledExceptionHandler, OperationCanceledException>
 {
     /// <inheritdoc />
-    public ProgrammingErrorExceptionHandler(ProblemDetailsFactory problemDetailsFactory, IHostEnvironment environment)
+    public OperationCancelledExceptionHandler(ProblemDetailsFactory problemDetailsFactory, IHostEnvironment environment)
         : base(problemDetailsFactory, environment)
     {
     }
 
     /// <inheritdoc />
-    protected override bool LogException
-        => true;
-
-    /// <inheritdoc />
-    protected override int? GetStatusCode(ExceptionContext context, ProgrammingError? exception)
-        => exception is ApiUsageError // ApiUsageError => programming error on the frontend
-               ? StatusCodes.Status400BadRequest
-               : StatusCodes.Status500InternalServerError;
+    protected override int? GetStatusCode(ExceptionContext context, OperationCanceledException? exception)
+        => 499; // client closed
 }

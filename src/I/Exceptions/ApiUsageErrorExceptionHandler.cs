@@ -9,8 +9,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System.Diagnostics.CodeAnalysis;
-
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -18,17 +16,13 @@ using Microsoft.Extensions.Hosting;
 
 using PPWCode.Vernacular.Exceptions.V;
 
-using ProgrammingError = PPWCode.Vernacular.Exceptions.V.ProgrammingError;
-
 namespace PPWCode.AspNetCore.Server.I.Exceptions;
 
 /// <inheritdoc />
-[ExcludeFromCodeCoverage]
-public sealed class ProgrammingErrorExceptionHandler
-    : BaseExceptionHandler<ProgrammingErrorExceptionHandler, ProgrammingError>
+public sealed class ApiUsageErrorExceptionHandler : BaseExceptionHandler<ApiUsageErrorExceptionHandler, ApiUsageError>
 {
     /// <inheritdoc />
-    public ProgrammingErrorExceptionHandler(ProblemDetailsFactory problemDetailsFactory, IHostEnvironment environment)
+    public ApiUsageErrorExceptionHandler(ProblemDetailsFactory problemDetailsFactory, IHostEnvironment environment)
         : base(problemDetailsFactory, environment)
     {
     }
@@ -38,8 +32,6 @@ public sealed class ProgrammingErrorExceptionHandler
         => true;
 
     /// <inheritdoc />
-    protected override int? GetStatusCode(ExceptionContext context, ProgrammingError? exception)
-        => exception is ApiUsageError // ApiUsageError => programming error on the frontend
-               ? StatusCodes.Status400BadRequest
-               : StatusCodes.Status500InternalServerError;
+    protected override int? GetStatusCode(ExceptionContext context, ApiUsageError? contextException)
+        => StatusCodes.Status400BadRequest;
 }
