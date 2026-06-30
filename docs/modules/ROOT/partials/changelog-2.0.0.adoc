@@ -11,6 +11,7 @@ This file is translated into markdown and used for the release notes in the GitH
 * Renamed `OperationCanceledExceptionHandler` to `OperationCancelledExceptionHandler` because of typo (breaking change)
 * Renamed `SemanticExceptionHandler` to `SemanticExceptionExceptionHandler` (breaking change)
 * Improve documentation
+* log Method / URI for 400 <= statusCode < 500 as informational, if logs are requested
 
 === New
 * `ApiUsageErrorExceptionHandler`: initial version of exception handler for `ApiUsageError`
