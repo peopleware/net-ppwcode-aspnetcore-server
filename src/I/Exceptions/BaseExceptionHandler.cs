@@ -10,6 +10,7 @@
 // limitations under the License.
 
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -90,14 +91,29 @@ public abstract class BaseExceptionHandler<THandler, TException> : IExceptionHan
     {
         if (CanHandle(context))
         {
+            TException? contextException = context.Exception as TException;
+            int? statusCode = GetStatusCode(context, contextException);
+
             if (LogException)
             {
                 ILogger<THandler> logger = CreateLogger<THandler>(context);
-                LogContext(logger, context);
+                if (statusCode is >= 400 and < 500)
+                {
+                    if (logger.IsEnabled(LogLevel.Information))
+                    {
+                        logger.LogInformation(
+                            "A {StatusCode} was reported for {Method} {Uri}",
+                            statusCode.Value,
+                            context.HttpContext.Request.Method,
+                            context.HttpContext.Request.GetEncodedPathAndQuery());
+                    }
+                }
+                else
+                {
+                    LogContext(logger, context);
+                }
             }
 
-            TException? contextException = context.Exception as TException;
-            int? statusCode = GetStatusCode(context, contextException);
             if (statusCode is not null)
             {
                 ProblemDetails problemDetail =
@@ -149,7 +165,12 @@ public abstract class BaseExceptionHandler<THandler, TException> : IExceptionHan
     /// <param name="logger">The logger for <typeparamref name="THandler" />.</param>
     /// <param name="context">The current exception context.</param>
     protected virtual void LogContext(ILogger<THandler> logger, ExceptionContext context)
-        => logger.LogError(context.Exception, "Handled exception");
+    {
+        if (logger.IsEnabled(LogLevel.Error))
+        {
+            logger.LogError(context.Exception, "Handled exception");
+        }
+    }
 
     /// <summary>
     ///     Produces a custom <see cref="IActionResult" /> for the exception. Only invoked when
