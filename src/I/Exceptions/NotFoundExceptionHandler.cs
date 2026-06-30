@@ -33,6 +33,10 @@ public sealed class NotFoundExceptionHandler
     }
 
     /// <inheritdoc />
+    protected override bool LogException
+        => true;
+
+    /// <inheritdoc />
     protected override int? GetStatusCode(ExceptionContext context, NotFoundException? exception)
         => StatusCodes.Status404NotFound;
 
