@@ -11,8 +11,9 @@ This file is translated into markdown and used for the release notes in the GitH
 * Renamed `OperationCanceledExceptionHandler` to `OperationCancelledExceptionHandler` because of typo (breaking change)
 * Renamed `SemanticExceptionHandler` to `SemanticExceptionExceptionHandler` (breaking change)
 * Improve documentation
-* log Method / URI for 400 <= statusCode < 500 as informational, if logs are requested
+* log Method / URI for 400 <= statusCode < 500 as informational if logs are requested 
 
 === New
 * `ApiUsageErrorExceptionHandler`: initial version of exception handler for `ApiUsageError`
 * `ContractViolationExceptionHandler`: initial version of exception handler for `ContractViolation`
+* `TransactionalAttribute` now uses `TransactionTypeEnum` to specify whether transaction handling is required, prohibited, unspecified, or managed manually. For manually managed transactions, `ManualReason` can be used to document the reason. (breaking change)
