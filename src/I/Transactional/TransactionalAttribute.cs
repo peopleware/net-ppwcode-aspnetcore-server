@@ -19,7 +19,8 @@ namespace PPWCode.AspNetCore.Server.I.Transactional;
 /// </summary>
 /// <remarks>
 ///     When applied to a class, the setting applies to all of its actions; an attribute on an individual action
-///     overrides the class-level setting.
+///     overrides the class-level setting. Use <see cref="TransactionTypeEnum.MANUAL" /> when transaction management is
+///     performed by the decorated controller or action itself, and describe the reason in <see cref="ManualReason" />.
 /// </remarks>
 [ExcludeFromCodeCoverage]
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
@@ -28,23 +29,32 @@ public class TransactionalAttribute : Attribute
     /// <summary>
     ///     Initializes a new instance of the <see cref="TransactionalAttribute" /> class.
     /// </summary>
-    /// <param name="transactional">
-    ///     <see langword="true" /> to run the decorated controller or action within a transaction; otherwise
-    ///     <see langword="false" />.
+    /// <param name="transactionalType">
+    ///     The transaction behavior of the decorated controller or action.
     /// </param>
-    public TransactionalAttribute(bool transactional)
+    public TransactionalAttribute(TransactionTypeEnum transactionalType)
     {
-        Transactional = transactional;
+        TransactionalType = transactionalType;
         IsolationLevel = IsolationLevel.Unspecified;
     }
 
     /// <summary>
-    ///     Indicates whether the decorated controller or action should run within a transaction.
+    ///     Gets the transaction behavior of the decorated controller or action.
     /// </summary>
-    public bool Transactional { get; }
+    public TransactionTypeEnum TransactionalType { get; }
 
     /// <summary>
-    ///     The isolation level to use for the transaction. Defaults to <see cref="System.Data.IsolationLevel.Unspecified" />.
+    ///     Gets or sets the isolation level to use for the transaction. The default is
+    ///     <see cref="System.Data.IsolationLevel.Unspecified" />.
     /// </summary>
     public IsolationLevel IsolationLevel { get; set; }
+
+    /// <summary>
+    ///     Gets or sets the explanation for managing the transaction manually.
+    /// </summary>
+    /// <remarks>
+    ///     This property is intended for use when <see cref="TransactionalType" /> is
+    ///     <see cref="TransactionTypeEnum.MANUAL" />.
+    /// </remarks>
+    public string? ManualReason { get; set; }
 }

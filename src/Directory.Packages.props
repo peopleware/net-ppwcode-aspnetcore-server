@@ -23,25 +23,49 @@
         <PackageVersion Include="PPWCode.Vernacular.Exceptions.V" Version="1.*" />
         <PackageVersion Include="PPWCode.Vernacular.Persistence.V" Version="1.*" />
 
-        <!-- Asp.Versioning -->
-        <PackageVersion Include="Asp.Versioning.Mvc"  Version="8.*" />
-
         <!-- nunit -->
-        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
-        <PackageVersion Include="NUnit" Version="4.4.0" />
-        <PackageVersion Include="NUnit3TestAdapter" Version="6.0.1" />
-        <PackageVersion Include="JunitXml.TestLogger" Version="7.1.0" />
-        <PackageVersion Include="coverlet.collector" Version="6.0.4" />
+        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.*" />
+        <PackageVersion Include="NUnit" Version="4.*" />
+        <PackageVersion Include="NUnit3TestAdapter" Version="6.*" />
+        <PackageVersion Include="JunitXml.TestLogger" Version="8.*" />
+        <PackageVersion Include="coverlet.collector" Version="10.*" />
 
         <!-- analyzers -->
-        <PackageVersion Include="NUnit.Analyzers" Version="4.11.2" />
+        <PackageVersion Include="NUnit.Analyzers" Version="4.*" />
     </ItemGroup>
 
+    <!-- microsoft: framework dependent -->
+    <Choose>
+        <When Condition="'$(TargetFramework)' == 'net8.0'">
+            <ItemGroup>
+                <!-- Asp.Versioning -->
+                <PackageVersion Include="Asp.Versioning.Mvc"  Version="8.*" />
+            </ItemGroup>
+        </When>
+        <When Condition="'$(TargetFramework)' == 'net9.0'">
+            <ItemGroup>
+                <!-- Asp.Versioning -->
+                <PackageVersion Include="Asp.Versioning.Mvc"  Version="8.*" />
+            </ItemGroup>
+        </When>
+        <When Condition="'$(TargetFramework)' == 'net10.0'">
+            <ItemGroup>
+                <!-- Asp.Versioning -->
+                <PackageVersion Include="Asp.Versioning.Mvc"  Version="10.*" />
+            </ItemGroup>
+        </When>
+        <Otherwise>
+            <ItemGroup>
+                <!-- Asp.Versioning -->
+                <PackageVersion Include="Asp.Versioning.Mvc"  Version="10.*" />
+            </ItemGroup>
+        </Otherwise>
+    </Choose>
+    
     <!-- global package references -->
     <ItemGroup>
         <!-- included in each project, using PrivateAssets="All" -->
         <GlobalPackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556" />
-        <GlobalPackageReference Include="Microsoft.SourceLink.GitHub" Version="10.*" />
     </ItemGroup>
 
 </Project>
